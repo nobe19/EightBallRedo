@@ -11,6 +11,8 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var resultLabel: UILabel!
     
+    var lastIndex = -1
+    
     let answerArray = ["It is certain",
                        "It is decidedly so",
                        "Without a doubt",
@@ -39,7 +41,16 @@ class ViewController: UIViewController {
     
     func getResult() {
         resultLabel.alpha = 0.0
-        resultLabel.text = answerArray.randomElement()
+        
+        var randomIndex: Int //var randomIndex = -1 is okay too
+        repeat {
+            randomIndex = Int.random(in: 0..<answerArray.count)
+            if randomIndex == lastIndex {
+                print("We just repeated \(answerArray[lastIndex])")
+            }
+        } while randomIndex == lastIndex
+        lastIndex = randomIndex
+        resultLabel.text = answerArray[lastIndex]
         UIView.animate(withDuration: 1.0, animations: {self.resultLabel.alpha = 1.0})
     }
 
